@@ -133,6 +133,7 @@ export function CategoriesSection() {
                         src={category.image || "/placeholder.svg"}
                         alt={category.name}
                         fill
+                        sizes="w-full h-full"
                         className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-75"
                       />
                       

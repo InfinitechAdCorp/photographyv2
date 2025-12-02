@@ -30,9 +30,6 @@ export async function POST(req: NextRequest) {
         @media only screen and (max-width:600px) {
           .container{width:100% !important;padding:12px !important;}
           .hero{padding:18px !important;}
-          .two-col{display:block !important;width:100% !important;}
-          .btn{width:100% !important;display:block !important;}
-          .small{font-size:14px !important;}
         }
       </style>
     </head>

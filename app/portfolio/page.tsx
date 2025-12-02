@@ -162,18 +162,14 @@ export default function Portfolio() {
       <section className="pt-32 pb-16 px-6 relative overflow-hidden">
         {/* Animated film perforations - gold */}
         <div className="absolute top-0 left-0 right-0 h-16 bg-black border-b-2 border-amber-500 flex items-center overflow-hidden">
-          <motion.div
-            className="flex"
-            animate={{ x: [0, -200] }}
-            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-          >
+          <motion.div className="flex" animate={{ x: [0, -200] }} transition={{ duration: 15, repeat: Infinity, ease: "linear" }}>
             {[...Array(50)].map((_, i) => (
               <div key={i} className="w-10 h-7 bg-gradient-to-b from-amber-500 to-amber-600 mx-3 rounded-sm shadow-lg shadow-amber-500/30" />
             ))}
           </motion.div>
         </div>
 
-        <div className="max-w-6xl mx-auto text-center pt-8 relative z-10">
+        <div className="max-w-5xl mx-auto text-center pt-8 relative z-10">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
             {/* Camera viewfinder decoration */}
             <div className="inline-block relative mb-8">
@@ -210,8 +206,9 @@ export default function Portfolio() {
                 <div className="absolute bottom-0 right-0 w-3 h-3 bg-amber-500 rounded-full" />
               </motion.div>
 
-              <h1 className="text-6xl md:text-8xl font-serif font-light text-white px-12 py-6">
-                Our <span className="bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 bg-clip-text text-transparent font-bold">Portfolio</span>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light text-white px-12 py-6">
+                Our{" "}
+                <span className="bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 bg-clip-text text-transparent font-bold">Portfolio</span>
               </h1>
             </div>
 
@@ -247,11 +244,7 @@ export default function Portfolio() {
       {/* Category Filter - Camera Dial Style */}
       <section className="px-6 py-8 sticky top-0 z-40 bg-black/95 backdrop-blur-xl border-y border-amber-500/30">
         <div className="max-w-6xl mx-auto">
-          <motion.div
-            className="flex flex-wrap gap-4 justify-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
+          <motion.div className="flex flex-wrap gap-4 justify-center" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             {categories.map((category, index) => (
               <motion.button
                 key={category.value}
@@ -276,10 +269,7 @@ export default function Portfolio() {
                     transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 2 }}
                   />
                 )}
-                <motion.div
-                  animate={selectedCategory === category.value ? { rotate: [0, 360] } : {}}
-                  transition={{ duration: 0.5 }}
-                >
+                <motion.div animate={selectedCategory === category.value ? { rotate: [0, 360] } : {}} transition={{ duration: 0.5 }}>
                   {category.icon}
                 </motion.div>
                 {category.label}
@@ -315,6 +305,7 @@ export default function Portfolio() {
                           src={image.src || "/placeholder.svg"}
                           alt={image.alt}
                           fill
+                          sizes="w-full h-full"
                           className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-75"
                         />
 
@@ -326,9 +317,10 @@ export default function Portfolio() {
                           className="absolute inset-0 bg-gradient-to-br from-amber-500 to-amber-600"
                           initial={{ clipPath: "circle(0% at 50% 50%)" }}
                           animate={{
-                            clipPath: hoveredId === image.id 
-                              ? ["circle(0% at 50% 50%)", "circle(100% at 50% 50%)", "circle(0% at 50% 50%)"]
-                              : "circle(0% at 50% 50%)"
+                            clipPath:
+                              hoveredId === image.id
+                                ? ["circle(0% at 50% 50%)", "circle(100% at 50% 50%)", "circle(0% at 50% 50%)"]
+                                : "circle(0% at 50% 50%)",
                           }}
                           transition={{ duration: 0.8, times: [0, 0.5, 1] }}
                         />
@@ -341,11 +333,7 @@ export default function Portfolio() {
                           transition={{ delay: 0.3 }}
                         >
                           {/* Rule of thirds grid */}
-                          <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.4 }}
-                          >
+                          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
                             <div className="absolute top-1/3 left-0 right-0 h-px bg-amber-500/60" />
                             <div className="absolute top-2/3 left-0 right-0 h-px bg-amber-500/60" />
                             <div className="absolute left-1/3 top-0 bottom-0 w-px bg-amber-500/60" />
@@ -472,11 +460,7 @@ export default function Portfolio() {
             transition={{ type: "spring", stiffness: 100 }}
             className="mb-8"
           >
-            <motion.div
-              animate={{ rotate: [0, 360] }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              className="inline-block"
-            >
+            <motion.div animate={{ rotate: [0, 360] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} className="inline-block">
               <Aperture className="w-20 h-20 text-amber-500" />
             </motion.div>
           </motion.div>
@@ -487,7 +471,8 @@ export default function Portfolio() {
             viewport={{ once: true }}
             className="text-5xl md:text-6xl font-serif font-light text-white mb-6"
           >
-            Ready to Create Your <span className="bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 bg-clip-text text-transparent font-bold">Vision</span>?
+            Ready to Create Your{" "}
+            <span className="bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 bg-clip-text text-transparent font-bold">Vision</span>?
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -505,8 +490,12 @@ export default function Portfolio() {
             transition={{ delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <Button asChild size="lg" className="bg-gradient-to-r from-amber-500 to-amber-600 text-black hover:from-amber-400 hover:to-amber-500 font-bold shadow-xl shadow-amber-500/30 border-2 border-black">
-              <Link href="/booking">
+            <Button
+              asChild
+              size="lg"
+              className="bg-gradient-to-r from-amber-500 to-amber-600 text-black hover:from-amber-400 hover:to-amber-500 font-bold shadow-xl shadow-amber-500/30 border-2 border-black"
+            >
+              <Link href="/contact">
                 <Camera className="w-5 h-5 mr-2" />
                 Book a Session
               </Link>
@@ -517,7 +506,7 @@ export default function Portfolio() {
               size="lg"
               className="border-2 border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-black bg-transparent font-bold"
             >
-              <Link href="/about">Learn About Us</Link>
+              <Link href="/about">Learn More</Link>
             </Button>
           </motion.div>
         </div>

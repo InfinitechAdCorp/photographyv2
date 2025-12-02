@@ -36,8 +36,7 @@ const testimonials = [
   {
     name: "Lara Mendoza",
     role: "Fashion Model",
-    content:
-      "Every shot felt intentional and beautifully executed. The artistic direction and lighting made the images look editorial and timeless.",
+    content: "Every shot felt intentional and beautifully executed. The artistic direction and lighting made the images look editorial and timeless.",
     rating: 5,
     image: "/fashion-model-woman-portrait-elegant.jpg",
     category: "Portrait",
@@ -45,8 +44,7 @@ const testimonials = [
   {
     name: "David Reyes",
     role: "CEO, Crestline Systems",
-    content:
-      "Professional, reliable, and incredibly easy to work with. Our executive portraits look polished and modern—exactly what we needed.",
+    content: "Professional, reliable, and incredibly easy to work with. Our executive portraits look polished and modern—exactly what we needed.",
     rating: 5,
     image: "/executive-man-ceo-professional-headshot.jpg",
     category: "Corporate",
@@ -125,19 +123,19 @@ export function TestimonialsSection() {
       {/* Floating camera lens effect */}
       <motion.div
         className="absolute top-20 left-[10%] w-32 h-32 border-2 border-[#d4a574]/20 rounded-full"
-        animate={{ 
+        animate={{
           scale: [1, 1.2, 1],
           opacity: [0.2, 0.4, 0.2],
-          rotate: [0, 180, 360]
+          rotate: [0, 180, 360],
         }}
         transition={{ duration: 8, repeat: Infinity }}
       />
       <motion.div
         className="absolute bottom-32 right-[15%] w-40 h-40 border-2 border-[#d4a574]/15 rounded-full"
-        animate={{ 
+        animate={{
           scale: [1, 1.15, 1],
           opacity: [0.15, 0.3, 0.15],
-          rotate: [360, 180, 0]
+          rotate: [360, 180, 0],
         }}
         transition={{ duration: 10, repeat: Infinity, delay: 1 }}
       />
@@ -154,19 +152,15 @@ export function TestimonialsSection() {
           <motion.div
             className="inline-flex items-center gap-2 bg-[#d4a574]/10 border border-[#d4a574]/30 text-[#d4a574] px-5 py-2.5 rounded-full mb-6 backdrop-blur-sm"
             whileHover={{ scale: 1.05 }}
-            animate={{ 
-              boxShadow: [
-                "0 0 20px rgba(212, 165, 116, 0.1)",
-                "0 0 30px rgba(212, 165, 116, 0.2)",
-                "0 0 20px rgba(212, 165, 116, 0.1)",
-              ]
+            animate={{
+              boxShadow: ["0 0 20px rgba(212, 165, 116, 0.1)", "0 0 30px rgba(212, 165, 116, 0.2)", "0 0 20px rgba(212, 165, 116, 0.1)"],
             }}
             transition={{ duration: 2, repeat: Infinity }}
           >
             <Camera className="w-4 h-4" />
             <span className="text-sm font-medium tracking-wider uppercase">Client Stories</span>
           </motion.div>
-          
+
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -175,11 +169,9 @@ export function TestimonialsSection() {
             className="text-4xl md:text-5xl lg:text-6xl font-serif text-white mb-4"
           >
             What Our Clients{" "}
-            <span className="bg-gradient-to-r from-[#d4a574] via-[#e0b584] to-[#d4a574] bg-clip-text text-transparent italic">
-              Say
-            </span>
+            <span className="bg-gradient-to-r from-[#d4a574] via-[#e0b584] to-[#d4a574] bg-clip-text text-transparent italic">Say</span>
           </motion.h2>
-          
+
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -205,7 +197,7 @@ export function TestimonialsSection() {
                 transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
                 className="absolute inset-0"
               >
-                <div className="bg-gradient-to-br from-neutral-900 to-black rounded-2xl shadow-2xl shadow-[#d4a574]/20 p-8 md:p-12 border-2 border-[#d4a574]/30 h-full flex flex-col justify-center relative overflow-hidden">
+                <div className="bg-gradient-to-br from-neutral-900 to-black rounded-2xl shadow-2xl shadow-[#d4a574]/20 p-8 md:p-12 border-2 border-[#d4a574]/30 h-full min-h-[500px] flex flex-col justify-center relative">
                   {/* Animated background pattern */}
                   <motion.div
                     className="absolute inset-0 opacity-5"
@@ -213,20 +205,20 @@ export function TestimonialsSection() {
                       backgroundImage: `radial-gradient(circle at 2px 2px, #d4a574 1px, transparent 0)`,
                       backgroundSize: "40px 40px",
                     }}
-                    animate={{ 
+                    animate={{
                       backgroundPosition: ["0px 0px", "40px 40px"],
                     }}
                     transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                   />
 
                   {/* Quote icon with animation */}
-                  <motion.div 
-                    className="flex justify-center mb-6"
+                  <motion.div
+                    className="flex justify-center my-6"
                     initial={{ scale: 0, rotate: -180 }}
                     animate={{ scale: 1, rotate: 0 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                   >
-                    <motion.div 
+                    <motion.div
                       className="w-16 h-16 rounded-full bg-gradient-to-br from-[#d4a574] to-[#c9944a] flex items-center justify-center shadow-lg shadow-[#d4a574]/50"
                       whileHover={{ scale: 1.1, rotate: 180 }}
                       transition={{ duration: 0.5 }}
@@ -250,7 +242,7 @@ export function TestimonialsSection() {
                   </div>
 
                   {/* Testimonial content with fade-in animation */}
-                  <motion.blockquote 
+                  <motion.blockquote
                     className="text-xl md:text-2xl text-gray-200 leading-relaxed text-center mb-10 max-w-3xl mx-auto font-light relative z-10"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -260,14 +252,14 @@ export function TestimonialsSection() {
                   </motion.blockquote>
 
                   {/* Client info with slide-up animation */}
-                  <motion.div 
-                    className="flex flex-col items-center gap-4"
+                  <motion.div
+                    className="flex flex-col items-center gap-6"
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.6 }}
                   >
                     <div className="relative">
-                      <motion.div 
+                      <motion.div
                         className="w-24 h-24 rounded-full overflow-hidden border-4 border-[#d4a574]/40 shadow-xl shadow-[#d4a574]/20 bg-neutral-800"
                         whileHover={{ scale: 1.1, borderColor: "rgba(212, 165, 116, 0.8)" }}
                         transition={{ duration: 0.3 }}
@@ -280,30 +272,22 @@ export function TestimonialsSection() {
                           className="object-cover w-full h-full"
                         /> */}
                       </motion.div>
-                      
+
                       {/* Category badge with pulse */}
-                      <motion.span 
+                      <motion.span
                         className="absolute -bottom-2 left-1/2 -translate-x-1/2 text-xs font-semibold bg-gradient-to-r from-[#d4a574] to-[#c9944a] text-black px-3 py-1 rounded-full whitespace-nowrap shadow-lg"
-                        animate={{ 
-                          boxShadow: [
-                            "0 0 10px rgba(212, 165, 116, 0.3)",
-                            "0 0 20px rgba(212, 165, 116, 0.6)",
-                            "0 0 10px rgba(212, 165, 116, 0.3)",
-                          ]
+                        animate={{
+                          boxShadow: ["0 0 10px rgba(212, 165, 116, 0.3)", "0 0 20px rgba(212, 165, 116, 0.6)", "0 0 10px rgba(212, 165, 116, 0.3)"],
                         }}
                         transition={{ duration: 2, repeat: Infinity }}
                       >
                         {testimonials[currentIndex].category}
                       </motion.span>
                     </div>
-                    
-                    <div className="text-center">
-                      <p className="font-serif text-2xl text-white mb-1">
-                        {testimonials[currentIndex].name}
-                      </p>
-                      <p className="text-gray-400 text-sm">
-                        {testimonials[currentIndex].role}
-                      </p>
+
+                    <div className="text-center mb-4">
+                      <p className="font-serif text-2xl text-white mb-1">{testimonials[currentIndex].name}</p>
+                      <p className="text-gray-400 text-sm">{testimonials[currentIndex].role}</p>
                     </div>
                   </motion.div>
 
@@ -318,8 +302,8 @@ export function TestimonialsSection() {
           </div>
 
           {/* Navigation with enhanced animations */}
-          <motion.div 
-            className="flex justify-center items-center gap-6 mt-10"
+          <motion.div
+            className="flex justify-center items-center gap-6 mt-20"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -346,9 +330,7 @@ export function TestimonialsSection() {
                     setCurrentIndex(index)
                   }}
                   className={`transition-all duration-300 rounded-full ${
-                    index === currentIndex 
-                      ? "w-10 h-3 bg-gradient-to-r from-[#d4a574] to-[#c9944a]" 
-                      : "w-3 h-3 bg-[#d4a574]/30 hover:bg-[#d4a574]/60"
+                    index === currentIndex ? "w-10 h-3 bg-gradient-to-r from-[#d4a574] to-[#c9944a]" : "w-3 h-3 bg-[#d4a574]/30 hover:bg-[#d4a574]/60"
                   }`}
                   whileHover={{ scale: 1.2 }}
                   whileTap={{ scale: 0.9 }}

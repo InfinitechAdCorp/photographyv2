@@ -4,7 +4,6 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
 import { useRef, useState, useEffect } from "react"
-import { TypewriterText } from "@/components/typewriter-text"
 import { Camera, Award, Users, Heart, Aperture, Star, CheckCircle2, Sparkles } from "lucide-react"
 
 export function HeroSection() {
@@ -46,7 +45,7 @@ export function HeroSection() {
   const services = ["Wedding Photography", "Portrait Sessions", "Event Coverage", "Commercial Shoots"]
 
   return (
-    <section ref={heroRef} className="relative flex items-center overflow-hidden pb-0">
+    <section ref={heroRef} className="relative flex items-center overflow-hidden pb-0 py-16">
       {/* Dramatic black to gold gradient background */}
       <div className="absolute inset-0 bg-gradient-to-br from-black via-neutral-900 to-amber-950" />
       <div className="absolute inset-0 bg-gradient-to-t from-amber-600/20 via-transparent to-transparent" />
@@ -175,8 +174,10 @@ export function HeroSection() {
                       src={heroImages[currentImageIndex] || "/placeholder.svg"}
                       alt="Featured photography"
                       fill
+                      sizes="w-full h-full"
                       className="object-cover"
                       priority
+                      loading="eager"
                     />
                     {/* Gold gradient overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 mix-blend-multiply" />
@@ -332,7 +333,7 @@ export function HeroSection() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 4.2 + index * 0.1 }}
-                  className="px-4 py-2 bg-gradient-to-r from-amber-500/10 to-amber-600/10 border border-amber-500/30 rounded-full text-sm text-amber-400 hover:bg-gradient-to-r hover:from-amber-500 hover:to-amber-600 hover:text-black hover:border-amber-500 transition-all cursor-pointer font-medium backdrop-blur-sm"
+                  className="px-4 py-2 bg-gradient-to-r from-amber-500/10 to-amber-600/10 border border-amber-500/30 rounded-full text-sm text-amber-400 transition-all font-medium backdrop-blur-sm"
                   whileHover={{ scale: 1.05 }}
                 >
                   {service}
@@ -346,7 +347,7 @@ export function HeroSection() {
               transition={{ delay: 4.3, duration: 0.8 }}
               className="flex flex-wrap gap-4 pt-2"
             >
-              <Link href="/booking">
+              <Link href="/contact">
                 <Button size="lg" className="bg-gradient-to-r from-amber-500 to-amber-600 text-black hover:from-amber-400 hover:to-amber-500 px-8 md:px-10 group font-bold shadow-xl shadow-amber-500/30 border-2 border-black">
                   <Camera className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
                   Book a Session
