@@ -1,10 +1,13 @@
 "use client"
 import { Card } from "@/components/ui/card"
-import { Award, Camera, Heart, Palette, Users, Zap, Sparkles, Target } from "lucide-react"
+import { Award, Camera, Heart, Palette, Users, Zap, Sparkles, Target, Aperture } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useRef } from "react"
+import { CountingNumber } from "@/components/ui/shadcn-io/counting-number"
+import FloatingParticles from "@/components/animated-golden-particles"
+import { Button } from "@/components/ui/button"
 
 const values = [
   {
@@ -81,12 +84,12 @@ const scaleIn = {
 export default function About() {
   const heroRef = useRef(null)
   const storyRef = useRef(null)
-  
+
   const { scrollYProgress: heroProgress } = useScroll({
     target: heroRef,
     offset: ["start end", "end start"],
   })
-  
+
   const { scrollYProgress: storyProgress } = useScroll({
     target: storyRef,
     offset: ["start end", "end start"],
@@ -98,66 +101,32 @@ export default function About() {
   return (
     <div className="min-h-screen pt-16 bg-black">
       {/* Animated golden particles */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        {[...Array(40)].map((_, i) => {
-          const size = 1 + Math.random() * 4
-          return (
-            <motion.div
-              key={i}
-              className="absolute rounded-full"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                width: `${size}px`,
-                height: `${size}px`,
-                background: "radial-gradient(circle, #FFD700, #FFA500)",
-                boxShadow: `0 0 ${size * 6}px #FFD700`,
-              }}
-              animate={{
-                y: [0, -80, 0],
-                x: [0, Math.random() * 40 - 20, 0],
-                opacity: [0, 0.8, 0],
-                scale: [0, 1.8, 0],
-              }}
-              transition={{
-                duration: 4 + Math.random() * 4,
-                repeat: Infinity,
-                delay: Math.random() * 5,
-                ease: "easeInOut",
-              }}
-            />
-          )
-        })}
-      </div>
+      <FloatingParticles />
 
       {/* Hero Section */}
-      <motion.section 
+      <motion.section
         ref={heroRef}
-        className="pt-16 pb-12 px-4 relative overflow-hidden" 
-        initial="hidden" 
-        animate="visible" 
+        className="pt-16 pb-12 px-4 relative overflow-hidden"
+        initial="hidden"
+        animate="visible"
         variants={staggerContainer}
       >
-        <motion.div 
+        <motion.div
           className="absolute inset-0 opacity-30"
-          style={{ 
-            y: heroY, 
-            background: "radial-gradient(ellipse at 50% 50%, rgba(255, 215, 0, 0.3), transparent 60%)" 
+          style={{
+            y: heroY,
+            background: "radial-gradient(ellipse at 50% 50%, rgba(255, 215, 0, 0.3), transparent 60%)",
           }}
         />
-        
+
         <div className="max-w-5xl mx-auto text-center space-y-4 relative z-10">
-          <motion.div
-            className="inline-block"
-            variants={scaleIn}
-            transition={{ duration: 0.6, type: "spring", stiffness: 200 }}
-          >
+          <motion.div className="inline-block" variants={scaleIn} transition={{ duration: 0.6, type: "spring", stiffness: 200 }}>
             <Sparkles className="inline-block h-6 w-6 mb-2" style={{ color: "#FFD700" }} />
           </motion.div>
-          
+
           <motion.p
             className="text-xs uppercase tracking-[0.3em] font-bold"
-            style={{ 
+            style={{
               background: "linear-gradient(135deg, #FFD700, #FFA500, #FFD700)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
@@ -167,7 +136,7 @@ export default function About() {
           >
             About Us
           </motion.p>
-          
+
           <motion.h1
             className="text-4xl md:text-6xl font-bold font-serif text-white leading-tight"
             variants={fadeInUp}
@@ -175,19 +144,14 @@ export default function About() {
           >
             A Legacy of{" "}
             <motion.span
-              style={{ 
-                background: "linear-gradient(135deg, #FFD700, #FFA500, #FFD700, #FF8C00)",
-                backgroundSize: "200% 200%",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
+              className="bg-gradient-to-tr from-[#FFD700] via-[#FFA500] to-[#FF8C00] bg-[length:200%_200%] bg-clip-text text-transparent"
               animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
               transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
             >
               Excellence
             </motion.span>
           </motion.h1>
-          
+
           <motion.p
             className="text-base md:text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed"
             variants={fadeInUp}
@@ -199,24 +163,18 @@ export default function About() {
       </motion.section>
 
       {/* Story Section */}
-      <motion.section
-        ref={storyRef}
-        className="py-12 px-4 relative overflow-hidden"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-      >
-        <motion.div 
+      <motion.section ref={storyRef} className="py-12 px-4 relative overflow-hidden" initial="hidden" animate="visible" variants={staggerContainer}>
+        <motion.div
           className="absolute inset-0 opacity-20"
-          style={{ 
+          style={{
             y: storyY,
-            background: "radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.4), transparent 60%)"
+            background: "radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.4), transparent 60%)",
           }}
         />
 
         <div className="container mx-auto max-w-4xl relative z-10">
           <motion.div className="text-center mb-8" variants={fadeInUp} transition={{ duration: 0.5 }}>
-            <motion.h2 
+            <motion.h2
               className="text-3xl md:text-4xl font-bold mb-3"
               style={{
                 background: "linear-gradient(135deg, #FFD700, #FFA500)",
@@ -234,15 +192,14 @@ export default function About() {
             />
           </motion.div>
 
-          <motion.div
-            className="space-y-4 text-base leading-relaxed text-gray-300"
-            variants={staggerContainer}
-          >
+          <motion.div className="space-y-4 text-base leading-relaxed text-gray-300" variants={staggerContainer}>
             <motion.p variants={fadeInUp} transition={{ duration: 0.5 }}>
-              Founded with passion for capturing life's precious moments, our studio has grown into a premier destination for professional photography. Over a decade of experience documenting countless weddings, portraits, and special events.
+              Founded with passion for capturing life's precious moments, our studio has grown into a premier destination for professional
+              photography. Over a decade of experience documenting countless weddings, portraits, and special events.
             </motion.p>
             <motion.p variants={fadeInUp} transition={{ duration: 0.5 }}>
-              Our journey began with a simple belief: every moment deserves to be preserved beautifully. This philosophy drives everything we do, from initial consultation to final delivery.
+              Our journey began with a simple belief: every moment deserves to be preserved beautifully. This philosophy drives everything we do, from
+              initial consultation to final delivery.
             </motion.p>
             <motion.p variants={fadeInUp} transition={{ duration: 0.5 }}>
               We blend technical expertise with artistic vision. We don't just take photos—we create visual stories you'll treasure for generations.
@@ -257,11 +214,11 @@ export default function About() {
           <motion.div
             className="text-center mb-10"
             initial="hidden"
-            whileInView="visible"
+            animate="visible"
             viewport={{ once: true, amount: 0.2 }}
             variants={staggerContainer}
           >
-            <motion.h2 
+            <motion.h2
               className="text-3xl md:text-4xl font-bold mb-3"
               style={{
                 background: "linear-gradient(135deg, #FFD700, #FFA500)",
@@ -285,18 +242,13 @@ export default function About() {
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
             initial="hidden"
-            whileInView="visible"
+            animate="visible"
             viewport={{ once: true, amount: 0.1 }}
             variants={staggerContainer}
           >
             {values.map((value, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-                transition={{ duration: 0.5 }}
-                whileHover={{ y: -10, scale: 1.03 }}
-              >
-                <Card 
+              <motion.div key={index} variants={fadeInUp} transition={{ duration: 0.5 }} whileHover={{ y: -10, scale: 1.03 }}>
+                <Card
                   className="p-6 text-center h-full transition-all duration-300 border-2 relative overflow-hidden group"
                   style={{
                     backgroundColor: "rgba(0, 0, 0, 0.6)",
@@ -319,10 +271,10 @@ export default function About() {
                       background: "radial-gradient(circle at center, rgba(255, 215, 0, 0.1), transparent)",
                     }}
                   />
-                  
+
                   <motion.div
                     initial={{ scale: 0, rotate: -180 }}
-                    whileInView={{ scale: 1, rotate: 0 }}
+                    animate={{ scale: 1, rotate: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1, type: "spring", stiffness: 200 }}
                     className="relative z-10"
@@ -339,24 +291,19 @@ export default function About() {
       </section>
 
       {/* Experience Section */}
-      <motion.section
-        className="py-12 px-4 relative overflow-hidden"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-      >
-        <motion.div 
+      <motion.section className="py-12 px-4 relative overflow-hidden" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
+        <motion.div
           className="absolute inset-0 opacity-20"
-          style={{ 
-            background: "radial-gradient(circle at 80% 50%, rgba(255, 165, 0, 0.4), transparent 60%)"
+          style={{
+            background: "radial-gradient(circle at 80% 50%, rgba(255, 165, 0, 0.4), transparent 60%)",
           }}
           animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.3, 0.2] }}
           transition={{ duration: 8, repeat: Infinity }}
         />
-        
+
         <div className="container mx-auto max-w-5xl relative z-10">
           <motion.div className="text-center mb-10" variants={fadeInUp}>
-            <h2 
+            <h2
               className="text-3xl md:text-4xl font-bold mb-3"
               style={{
                 background: "linear-gradient(135deg, #FFD700, #FFA500)",
@@ -371,9 +318,9 @@ export default function About() {
 
           <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center" variants={staggerContainer}>
             {[
-              { number: "10+", label: "Years", desc: "Decade of capturing moments", icon: Award },
-              { number: "500+", label: "Happy Clients", desc: "Satisfied customers", icon: Users },
-              { number: "50K+", label: "Photos Taken", desc: "Memories preserved", icon: Camera },
+              { number: 10, suffix: "+", label: "Years", desc: "Decade of capturing moments", icon: Award },
+              { number: 500, suffix: "+", label: "Happy Clients", desc: "Satisfied customers", icon: Users },
+              { number: 50, suffix: "K+", label: "Photos Taken", desc: "Memories preserved", icon: Camera },
             ].map((stat, index) => (
               <motion.div
                 key={index}
@@ -383,12 +330,12 @@ export default function About() {
                   borderColor: "rgba(255, 215, 0, 0.3)",
                 }}
                 variants={fadeInUp}
-                whileHover={{ 
-                  scale: 1.05, 
+                whileHover={{
+                  scale: 1.05,
                   y: -8,
                   borderColor: "#FFD700",
                   backgroundColor: "rgba(255, 215, 0, 0.1)",
-                  boxShadow: "0 15px 50px rgba(255, 215, 0, 0.4)"
+                  boxShadow: "0 15px 50px rgba(255, 215, 0, 0.4)",
                 }}
               >
                 <motion.div
@@ -397,7 +344,7 @@ export default function About() {
                     background: "radial-gradient(circle at center, rgba(255, 215, 0, 0.15), transparent)",
                   }}
                 />
-                
+
                 <motion.div
                   className="relative z-10"
                   initial={{ opacity: 0, scale: 0.3, rotate: -45 }}
@@ -414,7 +361,8 @@ export default function About() {
                       WebkitTextFillColor: "transparent",
                     }}
                   >
-                    {stat.number}
+                    <CountingNumber number={stat.number}></CountingNumber>
+                    {stat.suffix}
                   </div>
                   <div className="text-base font-semibold mb-1 text-white">{stat.label}</div>
                   <p className="text-gray-400 text-xs">{stat.desc}</p>
@@ -435,14 +383,10 @@ export default function About() {
             viewport={{ once: true }}
             variants={staggerContainer}
           >
-            <motion.p
-              className="text-xs uppercase tracking-[0.3em] font-bold"
-              style={{ color: "#FFD700" }}
-              variants={fadeInUp}
-            >
+            <motion.p className="text-xs uppercase tracking-[0.3em] font-bold" style={{ color: "#FFD700" }} variants={fadeInUp}>
               Our Creative Space
             </motion.p>
-            <motion.h2 
+            <motion.h2
               className="text-3xl md:text-4xl font-serif font-bold"
               style={{
                 background: "linear-gradient(135deg, #FFD700, #FFA500)",
@@ -455,17 +399,8 @@ export default function About() {
             </motion.h2>
           </motion.div>
 
-          <motion.div
-            className="space-y-6"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-          >
-            <motion.p
-              className="text-base text-gray-300 leading-relaxed text-center max-w-3xl mx-auto"
-              variants={fadeInUp}
-            >
+          <motion.div className="space-y-6" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}>
+            <motion.p className="text-base text-gray-300 leading-relaxed text-center max-w-3xl mx-auto" variants={fadeInUp}>
               Our studio is thoughtfully designed to spark creativity and support every artistic vision.
             </motion.p>
 
@@ -495,12 +430,12 @@ export default function About() {
                     borderColor: "rgba(255, 215, 0, 0.3)",
                   }}
                   variants={fadeInUp}
-                  whileHover={{ 
-                    y: -8, 
+                  whileHover={{
+                    y: -8,
                     scale: 1.02,
                     borderColor: "#FFD700",
                     backgroundColor: "rgba(255, 215, 0, 0.1)",
-                    boxShadow: "0 10px 40px rgba(255, 215, 0, 0.3)"
+                    boxShadow: "0 10px 40px rgba(255, 215, 0, 0.3)",
                   }}
                 >
                   <motion.div
@@ -509,8 +444,8 @@ export default function About() {
                       background: "radial-gradient(circle at center, rgba(255, 215, 0, 0.1), transparent)",
                     }}
                   />
-                  
-                  <motion.div 
+
+                  <motion.div
                     className="w-10 h-10 rounded-lg flex items-center justify-center mb-3 relative z-10"
                     style={{ backgroundColor: "rgba(255, 215, 0, 0.2)" }}
                     whileHover={{ rotate: 360, scale: 1.1 }}
@@ -537,14 +472,10 @@ export default function About() {
             viewport={{ once: true }}
             variants={staggerContainer}
           >
-            <motion.p
-              className="text-xs uppercase tracking-[0.3em] font-bold"
-              style={{ color: "#FFD700" }}
-              variants={fadeInUp}
-            >
+            <motion.p className="text-xs uppercase tracking-[0.3em] font-bold" style={{ color: "#FFD700" }} variants={fadeInUp}>
               Meet Our Team
             </motion.p>
-            <motion.h2 
+            <motion.h2
               className="text-3xl md:text-4xl font-serif font-bold"
               style={{
                 background: "linear-gradient(135deg, #FFD700, #FFA500)",
@@ -573,35 +504,35 @@ export default function About() {
                 className="group rounded-xl overflow-hidden transition-all duration-300 border-2 relative"
                 style={{
                   borderColor: "rgba(255, 215, 0, 0.3)",
-                  backgroundColor: "rgba(0, 0, 0, 0.6)"
+                  backgroundColor: "rgba(0, 0, 0, 0.6)",
                 }}
                 variants={fadeInUp}
-                whileHover={{ 
+                whileHover={{
                   y: -8,
                   borderColor: "#FFD700",
                   backgroundColor: "rgba(255, 215, 0, 0.1)",
-                  boxShadow: "0 15px 50px rgba(255, 215, 0, 0.4)"
+                  boxShadow: "0 15px 50px rgba(255, 215, 0, 0.4)",
                 }}
               >
-                <div className="relative h-56 overflow-hidden bg-black">
-                  <motion.div 
-                    className="w-full h-full" 
-                    whileHover={{ scale: 1.1, rotate: 1 }} 
+                <div className="relative h-96 overflow-hidden bg-black">
+                  <motion.div
+                    className="w-full h-full"
+                    whileHover={{ scale: 1.1, rotate: 1 }}
                     transition={{ duration: 0.6, type: "spring", stiffness: 120 }}
                   >
                     <Image
                       src={member.image || "/placeholder.svg"}
                       alt={member.name}
-                      width={300}
-                      height={300}
+                      fill
+                      sizes="w-full h-full"
                       className="w-full h-full object-cover"
                     />
                   </motion.div>
-                  <motion.div 
+                  <motion.div
                     className="absolute inset-0"
-                    style={{ 
+                    style={{
                       background: "linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent, transparent)",
-                      opacity: 0
+                      opacity: 0,
                     }}
                     whileHover={{ opacity: 1 }}
                     transition={{ duration: 0.3 }}
@@ -615,9 +546,7 @@ export default function About() {
                       {member.role}
                     </p>
                   </div>
-                  <p className="text-xs uppercase tracking-wide text-gray-400 font-semibold">
-                    {member.specialty}
-                  </p>
+                  <p className="text-xs uppercase tracking-wide text-gray-400 font-semibold">{member.specialty}</p>
                   <p className="text-gray-400 text-xs leading-relaxed">{member.bio}</p>
                 </div>
               </motion.div>
@@ -627,68 +556,78 @@ export default function About() {
       </section>
 
       {/* CTA Section */}
-      <motion.section
-        className="py-16 px-4 relative overflow-hidden"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-      >
+      <section className="py-24 px-6 bg-black relative overflow-hidden border-t-2 border-amber-500">
+        {/* Rotating aperture decoration */}
         <motion.div
-          className="absolute top-1/2 -right-20 w-96 h-96 rounded-full blur-3xl"
-          style={{ backgroundColor: "rgba(255, 215, 0, 0.3)" }}
-          animate={{ scale: [1, 1.4, 1], opacity: [0.3, 0.6, 0.3] }}
-          transition={{ duration: 8, repeat: Infinity }}
+          className="absolute -right-32 -top-32 w-96 h-96 border-[40px] border-amber-500/20 rounded-full"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.div
+          className="absolute -left-32 -bottom-32 w-96 h-96 border-[40px] border-amber-500/10 rounded-full"
+          animate={{ rotate: -360 }}
+          transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
         />
 
-        <div className="max-w-4xl mx-auto text-center space-y-6 relative z-10">
-          <motion.h2
-            className="text-3xl md:text-5xl font-bold font-serif"
-            variants={fadeInUp}
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ type: "spring", stiffness: 100 }}
+            className="mb-8"
           >
-            <span className="text-white">Let's Create Something </span>
-            <motion.span 
-              style={{ 
-                background: "linear-gradient(135deg, #FFD700, #FFA500, #FFD700, #FF8C00)",
-                backgroundSize: "200% 200%",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-              animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-            >
-              Beautiful
-            </motion.span>
+            <motion.div animate={{ rotate: [0, 360] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} className="inline-block">
+              <Aperture className="w-20 h-20 text-amber-500" />
+            </motion.div>
+          </motion.div>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-5xl md:text-6xl font-serif font-light text-white mb-6"
+          >
+            Ready to Create Something{" "}
+            <span className="bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 bg-clip-text text-transparent font-bold">Beautiful</span>?
           </motion.h2>
-          <motion.p className="text-base text-gray-300 max-w-2xl mx-auto" variants={fadeInUp}>
-            Ready to work with our team? Let's discuss your vision and bring it to life.
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-lg text-gray-300 mb-10 max-w-2xl mx-auto"
+          >
+            Let&apos;s discuss your vision and bring it to life through stunning photography and videography.
           </motion.p>
-          <motion.div variants={fadeInUp}>
-            <Link
-              href="/contact"
-              className="inline-block px-8 py-3 font-bold rounded-lg transition-all duration-300 text-black uppercase text-sm tracking-wider relative overflow-hidden group"
-              style={{
-                background: "linear-gradient(135deg, #FFD700, #FFA500)",
-                boxShadow: "0 5px 30px rgba(255, 215, 0, 0.5)"
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "scale(1.05) translateY(-3px)"
-                e.currentTarget.style.boxShadow = "0 10px 50px rgba(255, 215, 0, 0.7)"
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "scale(1) translateY(0)"
-                e.currentTarget.style.boxShadow = "0 5px 30px rgba(255, 215, 0, 0.5)"
-              }}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+          >
+            <Button
+              asChild
+              size="lg"
+              className="bg-gradient-to-r from-amber-500 to-amber-600 text-black hover:from-amber-400 hover:to-amber-500 font-bold shadow-xl shadow-amber-500/30 border-2 border-black"
             >
-              <motion.span
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30"
-                animate={{ x: ["-100%", "200%"] }}
-                transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 0.5 }}
-              />
-              Book a Consultation
-            </Link>
+              <Link href="/contact">
+                <Camera className="w-5 h-5 mr-2" />
+                Start Your Project
+              </Link>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="border-2 border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-black bg-transparent font-bold"
+            >
+              <Link href="/about">Learn About Us</Link>
+            </Button>
           </motion.div>
         </div>
-      </motion.section>
+      </section>
     </div>
   )
 }

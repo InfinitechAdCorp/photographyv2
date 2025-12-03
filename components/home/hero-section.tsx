@@ -4,8 +4,8 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
 import { useRef, useState, useEffect } from "react"
-import { TypewriterText } from "@/components/typewriter-text"
 import { Camera, Award, Users, Heart, Aperture, Star, CheckCircle2, Sparkles } from "lucide-react"
+import FloatingParticles from "../animated-golden-particles"
 
 export function HeroSection() {
   const heroRef = useRef<HTMLDivElement>(null)
@@ -46,32 +46,13 @@ export function HeroSection() {
   const services = ["Wedding Photography", "Portrait Sessions", "Event Coverage", "Commercial Shoots"]
 
   return (
-    <section ref={heroRef} className="relative flex items-center overflow-hidden pb-0">
+    <section ref={heroRef} className="relative flex items-center overflow-hidden pb-0 py-16">
       {/* Dramatic black to gold gradient background */}
       <div className="absolute inset-0 bg-gradient-to-br from-black via-neutral-900 to-amber-950" />
       <div className="absolute inset-0 bg-gradient-to-t from-amber-600/20 via-transparent to-transparent" />
       
       {/* Animated gold particles */}
-      {[...Array(20)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 bg-amber-400 rounded-full"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
-          animate={{
-            y: [0, -30, 0],
-            opacity: [0, 1, 0],
-            scale: [0, 1, 0],
-          }}
-          transition={{
-            duration: 3 + Math.random() * 2,
-            repeat: Number.POSITIVE_INFINITY,
-            delay: Math.random() * 3,
-          }}
-        />
-      ))}
+      <FloatingParticles count={20}/>
 
       {/* Floating gold orbs */}
       <motion.div
@@ -175,8 +156,10 @@ export function HeroSection() {
                       src={heroImages[currentImageIndex] || "/placeholder.svg"}
                       alt="Featured photography"
                       fill
+                      sizes="w-full h-full"
                       className="object-cover"
                       priority
+                      loading="eager"
                     />
                     {/* Gold gradient overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 mix-blend-multiply" />
@@ -227,10 +210,7 @@ export function HeroSection() {
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
             >
-              <motion.div
-                animate={{ rotate: [0, 180, 0] }}
-                transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY }}
-              >
+              <motion.div animate={{ rotate: [0, 180, 0] }} transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY }}>
                 <Aperture className="w-10 h-10 text-black group-hover:text-white transition-colors" />
               </motion.div>
               {/* Pulse ring */}
@@ -248,7 +228,7 @@ export function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1 }}
             >
-              <motion.span 
+              <motion.span
                 className="w-2 h-2 bg-black rounded-full"
                 animate={{ scale: [1, 1.3, 1] }}
                 transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY }}
@@ -269,10 +249,7 @@ export function HeroSection() {
           <div className="space-y-6 sm:space-y-8 order-2 lg:order-2">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5, duration: 0.8 }}>
               <div className="flex items-center gap-4 mb-4">
-                <motion.div
-                  animate={{ rotate: [0, 360] }}
-                  transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-                >
+                <motion.div animate={{ rotate: [0, 360] }} transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}>
                   <Sparkles className="w-6 h-6 text-amber-500" />
                 </motion.div>
                 <p className="text-amber-500 font-black tracking-widest text-sm">LUMINOUS STUDIO</p>
@@ -316,8 +293,8 @@ export function HeroSection() {
               transition={{ delay: 4, duration: 0.8 }}
               className="text-gray-300 text-base md:text-lg max-w-lg leading-relaxed"
             >
-              Professional photography and videography services for weddings, events, portraits, and commercial
-              projects. We transform fleeting moments into timeless memories with artistic precision.
+              Professional photography and videography services for weddings, events, portraits, and commercial projects. We transform fleeting
+              moments into timeless memories with artistic precision.
             </motion.p>
 
             <motion.div
@@ -332,7 +309,7 @@ export function HeroSection() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 4.2 + index * 0.1 }}
-                  className="px-4 py-2 bg-gradient-to-r from-amber-500/10 to-amber-600/10 border border-amber-500/30 rounded-full text-sm text-amber-400 hover:bg-gradient-to-r hover:from-amber-500 hover:to-amber-600 hover:text-black hover:border-amber-500 transition-all cursor-pointer font-medium backdrop-blur-sm"
+                  className="px-4 py-2 bg-gradient-to-r from-amber-500/10 to-amber-600/10 border border-amber-500/30 rounded-full text-sm text-amber-400 transition-all font-medium backdrop-blur-sm"
                   whileHover={{ scale: 1.05 }}
                 >
                   {service}
@@ -346,8 +323,11 @@ export function HeroSection() {
               transition={{ delay: 4.3, duration: 0.8 }}
               className="flex flex-wrap gap-4 pt-2"
             >
-              <Link href="/booking">
-                <Button size="lg" className="bg-gradient-to-r from-amber-500 to-amber-600 text-black hover:from-amber-400 hover:to-amber-500 px-8 md:px-10 group font-bold shadow-xl shadow-amber-500/30 border-2 border-black">
+              <Link href="/contact">
+                <Button
+                  size="lg"
+                  className="bg-gradient-to-r from-amber-500 to-amber-600 text-black hover:from-amber-400 hover:to-amber-500 px-8 md:px-10 group font-bold shadow-xl shadow-amber-500/30 border-2 border-black"
+                >
                   <Camera className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
                   Book a Session
                 </Button>
@@ -381,7 +361,9 @@ export function HeroSection() {
                   <div className="w-12 h-12 bg-gradient-to-br from-amber-500/20 to-amber-600/20 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:from-amber-500/40 group-hover:to-amber-600/40 transition-all border border-amber-500/30 shadow-lg shadow-amber-500/20">
                     <stat.icon className="w-6 h-6 text-amber-500" />
                   </div>
-                  <p className="text-3xl md:text-4xl font-serif font-bold bg-gradient-to-r from-amber-500 to-amber-300 bg-clip-text text-transparent">{stat.value}</p>
+                  <p className="text-3xl md:text-4xl font-serif font-bold bg-gradient-to-r from-amber-500 to-amber-300 bg-clip-text text-transparent">
+                    {stat.value}
+                  </p>
                   <p className="text-xs text-gray-400 uppercase tracking-wider mt-1">{stat.label}</p>
                 </motion.div>
               ))}
@@ -395,18 +377,12 @@ export function HeroSection() {
             >
               <div className="flex -space-x-3">
                 {[1, 2, 3, 4, 5].map((i) => (
-                  <motion.div 
-                    key={i} 
+                  <motion.div
+                    key={i}
                     className="w-10 h-10 rounded-full border-3 border-amber-500 bg-neutral-800 overflow-hidden shadow-lg"
                     whileHover={{ scale: 1.2, zIndex: 10 }}
                   >
-                    <Image
-                      src={`/happy-client-portrait-face-.jpg`}
-                      alt={`Client ${i}`}
-                      width={40}
-                      height={40}
-                      className="object-cover"
-                    />
+                    <Image src={`/happy-client-portrait-face-.jpg`} alt={`Client ${i}`} width={40} height={40} className="object-cover" />
                   </motion.div>
                 ))}
               </div>

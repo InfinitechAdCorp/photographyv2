@@ -57,6 +57,7 @@ export function HorizontalGallery({ images, className = "" }: HorizontalGalleryP
               src={image.src || "/placeholder.svg"}
               alt={image.alt}
               fill
+              sizes="w-full h-full"
               className="object-cover transition-transform duration-700 group-hover:scale-110"
             />
 

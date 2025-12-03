@@ -4,21 +4,20 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { Camera, Users, PartyPopper, Package, Building2, User, Clock, MapPin, Sparkles, Check, Aperture, Film, Zap } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import FloatingParticles from "@/components/animated-golden-particles"
 
 const photographyServices = [
   {
     title: "Wedding Photography",
-    description:
-      "Celebrate your special day with timeless, artistic wedding photography. Full day coverage capturing every emotional moment.",
+    description: "Celebrate your special day with timeless, artistic wedding photography. Full day coverage capturing every emotional moment.",
     features: ["8-10 hour coverage", "Two photographers", "Edited digital gallery", "Print releases included"],
     price: "Starting at $3,500",
     icon: <Users className="w-6 h-6" />,
     color: "from-amber-500 to-amber-600",
   },
   {
-    title: "Portrait Sessions",
-    description:
-      "Professional portraits for headshots, families, couples, and personal brands. Captured in our studio or on location.",
+    title: "Portrait Photography",
+    description: "Professional portraits for headshots, families, couples, and personal brands. Captured in our studio or on location.",
     features: ["60-120 min session", "Professional styling", "50+ edited images", "Digital gallery + prints"],
     price: "Starting at $500",
     icon: <User className="w-6 h-6" />,
@@ -26,8 +25,7 @@ const photographyServices = [
   },
   {
     title: "Event Photography",
-    description:
-      "Document your corporate events, galas, conferences, and celebrations with professional coverage and storytelling.",
+    description: "Document your corporate events, galas, conferences, and celebrations with professional coverage and storytelling.",
     features: ["Flexible hours", "Multiple photographers", "Candid + posed shots", "Same-day highlight reel"],
     price: "Starting at $1,200",
     icon: <PartyPopper className="w-6 h-6" />,
@@ -35,8 +33,7 @@ const photographyServices = [
   },
   {
     title: "Product Photography",
-    description:
-      "Showcase your products with stunning, professional imagery designed to elevate your brand and boost sales.",
+    description: "Showcase your products with stunning, professional imagery designed to elevate your brand and boost sales.",
     features: ["Professional styling", "Unlimited shots", "Photo retouching", "Various backgrounds"],
     price: "Starting at $800",
     icon: <Package className="w-6 h-6" />,
@@ -44,8 +41,7 @@ const photographyServices = [
   },
   {
     title: "Commercial & Branding",
-    description:
-      "Build your brand identity with cohesive, professional photography for websites, marketing, and social media.",
+    description: "Build your brand identity with cohesive, professional photography for websites, marketing, and social media.",
     features: ["Custom shoot planning", "Brand consultation", "Multiple deliverables", "Lifestyle shots"],
     price: "Starting at $2,000",
     icon: <Building2 className="w-6 h-6" />,
@@ -53,8 +49,7 @@ const photographyServices = [
   },
   {
     title: "Headshots & Actors",
-    description:
-      "Professional headshots for actors, professionals, and performers. Industry-standard quality for casting.",
+    description: "Professional headshots for actors, professionals, and performers. Industry-standard quality for casting.",
     features: ["30-min session", "Multiple looks", "Professional makeup", "Express turnaround"],
     price: "Starting at $300",
     icon: <Camera className="w-6 h-6" />,
@@ -102,29 +97,22 @@ const studioRentalServices = [
 ]
 
 export default function ServicesPage() {
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0 },
+  }
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+    },
+  }
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
       {/* Animated gold particles background */}
-      {[...Array(50)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 bg-amber-400 rounded-full"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
-          animate={{
-            y: [0, -70, 0],
-            opacity: [0, 1, 0],
-            scale: [0, 1.5, 0],
-          }}
-          transition={{
-            duration: 7 + Math.random() * 4,
-            repeat: Infinity,
-            delay: Math.random() * 7,
-          }}
-        />
-      ))}
+      <FloatingParticles count={50} />
 
       {/* Hero Section with Aperture Effect */}
       <section className="pt-32 pb-20 px-6 relative overflow-hidden">
@@ -135,10 +123,10 @@ export default function ServicesPage() {
               key={i}
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-amber-500/10"
               style={{ width: 150 + i * 120, height: 150 + i * 120 }}
-              animate={{ 
-                rotate: i % 2 === 0 ? 360 : -360, 
+              animate={{
+                rotate: i % 2 === 0 ? 360 : -360,
                 scale: [1, 1.05, 1],
-                opacity: [0.1, 0.2, 0.1]
+                opacity: [0.1, 0.2, 0.1],
               }}
               transition={{ duration: 15 + i * 5, repeat: Infinity, ease: "linear" }}
             />
@@ -146,31 +134,25 @@ export default function ServicesPage() {
         </div>
 
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-          >
+          <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }}>
             <motion.div
               className="inline-flex items-center gap-3 bg-gradient-to-r from-amber-500 to-amber-600 text-black px-6 py-3 rounded-full mb-8 border-2 border-black shadow-xl shadow-amber-500/30"
-              whileHover={{ scale: 1.05 }}
-              animate={{ y: [0, -5, 0] }}
-              transition={{ duration: 3, repeat: Infinity }}
+              variants={fadeInUp}
+              transition={{ duration: 0.5 }}
             >
-              <motion.div
-                animate={{ rotate: [0, 360] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-              >
+              <motion.div animate={{ rotate: [0, 360] }} transition={{ duration: 3, repeat: Infinity, ease: "linear" }}>
                 <Aperture className="w-5 h-5" />
               </motion.div>
               <span className="text-sm font-black tracking-wider">OUR SERVICES</span>
             </motion.div>
 
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-light text-white mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light text-white mb-6">
               Premium Photography &<br />
-              <span className="bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 bg-clip-text text-transparent font-bold">Studio Solutions</span>
+              <span className="bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 bg-clip-text text-transparent font-bold">
+                Studio Solutions
+              </span>
             </h1>
-            
+
             <motion.div
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
@@ -179,107 +161,70 @@ export default function ServicesPage() {
             />
 
             <p className="text-lg text-gray-300 leading-relaxed max-w-3xl mx-auto">
-              From professional photography sessions to studio rentals, we provide everything you need to bring your
-              creative vision to life.
+              From professional photography sessions to studio rentals, we provide everything you need to bring your creative vision to life.
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* Photography Services - Enhanced Cards */}
-      <section className="py-20 px-6 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-20"
-          >
-            <motion.div
-              className="flex items-center justify-center gap-3 mb-6"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-            >
-              <motion.div
-                animate={{ rotate: [0, 360] }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              >
-                <Sparkles className="w-6 h-6 text-amber-500" />
+      <section className="py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 md:px-8 relative z-10">
+        <motion.div className="max-w-7xl mx-auto" initial="hidden" animate="visible" variants={staggerContainer}>
+          {/* Header */}
+          <motion.div variants={fadeInUp} transition={{ duration: 0.5 }} className="text-center mb-10 sm:mb-14 md:mb-20">
+            <div className="flex flex-row items-center justify-center gap-3 mb-6">
+              <motion.div animate={{ rotate: [0, 360] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }}>
+                <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500" />
               </motion.div>
-              <h2 className="text-5xl md:text-6xl font-serif font-light text-white">
+              <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-serif font-light text-white text-center">
                 Photography <span className="bg-gradient-to-r from-amber-500 to-amber-400 bg-clip-text text-transparent font-bold">Services</span>
               </h2>
-              <motion.div
-                animate={{ rotate: [360, 0] }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              >
-                <Sparkles className="w-6 h-6 text-amber-500" />
+              <motion.div animate={{ rotate: [360, 0] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }}>
+                <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500" />
               </motion.div>
-            </motion.div>
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+            </div>
+            <p className="text-sm sm:text-base md:text-lg text-gray-400 max-w-md sm:max-w-xl md:max-w-2xl mx-auto px-2">
               Professional photography tailored to your needs. All packages include edited images and full licensing rights.
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Services Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {photographyServices.map((service, index) => (
               <motion.div
                 key={service.title}
                 initial={{ opacity: 0, y: 60, rotateX: 20 }}
-                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                animate={{ opacity: 1, y: 0, rotateX: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
-                whileHover={{ y: -15, transition: { duration: 0.3 } }}
+                whileHover={{ y: -8, transition: { duration: 0.3 } }}
                 className="group"
               >
                 <div className="h-full bg-gradient-to-br from-neutral-900 to-black rounded-2xl shadow-2xl hover:shadow-amber-500/20 transition-all duration-500 overflow-hidden border-2 border-amber-500/30 relative">
-                  {/* Flash effect on hover */}
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-br from-amber-400 to-amber-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"
-                  />
+                  {/* Flash effect */}
+                  <motion.div className="absolute inset-0 bg-gradient-to-br from-amber-400 to-amber-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none" />
 
-                  {/* Gradient header with icon */}
-                  <div className={`bg-gradient-to-br ${service.color} p-8 relative overflow-hidden`}>
-                    {/* Animated viewfinder corners */}
+                  {/* Header */}
+                  <div className={`bg-gradient-to-br ${service.color} p-5 sm:p-6 md:p-8 relative overflow-hidden`}>
                     <motion.div
-                      className="absolute top-3 left-3 w-6 h-6 border-l-2 border-t-2 border-black/50"
+                      className="absolute top-2 left-2 w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 border-l-2 border-t-2 border-black/50"
                       initial={{ opacity: 0, x: -5, y: -5 }}
                       whileInView={{ opacity: 1, x: 0, y: 0 }}
                       viewport={{ once: true }}
                     />
                     <motion.div
-                      className="absolute top-3 right-3 w-6 h-6 border-r-2 border-t-2 border-black/50"
-                      initial={{ opacity: 0, x: 5, y: -5 }}
-                      whileInView={{ opacity: 1, x: 0, y: 0 }}
-                      viewport={{ once: true }}
-                    />
-                    <motion.div
-                      className="absolute bottom-3 left-3 w-6 h-6 border-l-2 border-b-2 border-black/50"
-                      initial={{ opacity: 0, x: -5, y: 5 }}
-                      whileInView={{ opacity: 1, x: 0, y: 0 }}
-                      viewport={{ once: true }}
-                    />
-                    <motion.div
-                      className="absolute bottom-3 right-3 w-6 h-6 border-r-2 border-b-2 border-black/50"
-                      initial={{ opacity: 0, x: 5, y: 5 }}
-                      whileInView={{ opacity: 1, x: 0, y: 0 }}
-                      viewport={{ once: true }}
-                    />
-
-                    <motion.div
-                      className="w-16 h-16 bg-black rounded-xl flex items-center justify-center text-amber-500 shadow-2xl border-2 border-black"
+                      className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-black rounded-xl flex items-center justify-center text-amber-500 shadow-2xl border-2 border-black"
                       whileHover={{ rotate: 180, scale: 1.1 }}
                       transition={{ duration: 0.5 }}
                     >
                       {service.icon}
                     </motion.div>
-                    <h3 className="text-2xl font-serif font-bold text-black mt-4">{service.title}</h3>
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-serif font-bold text-black mt-4">{service.title}</h3>
                   </div>
 
                   {/* Content */}
-                  <div className="p-8 space-y-6">
-                    <p className="text-gray-400 leading-relaxed">{service.description}</p>
+                  <div className="p-5 sm:p-6 md:p-8 space-y-6">
+                    <p className="text-xs sm:text-sm md:text-base text-gray-400 leading-relaxed line-clamp-4">{service.description}</p>
 
                     <div className="space-y-3">
                       {service.features.map((feature, i) => (
@@ -291,20 +236,24 @@ export default function ServicesPage() {
                           transition={{ delay: i * 0.1 }}
                           className="flex items-center gap-3 text-gray-300"
                         >
-                          <div className="w-5 h-5 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
-                            <Check className="w-3 h-3 text-amber-500" />
+                          <div className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                            <Check className="w-2 h-2 sm:w-3 sm:h-3 text-amber-500" />
                           </div>
-                          <span className="text-sm">{feature}</span>
+                          <span className="text-xs sm:text-sm">{feature}</span>
                         </motion.div>
                       ))}
                     </div>
 
-                    <div className="pt-6 border-t border-amber-500/20 flex items-center justify-between">
-                      <p className="text-3xl font-serif font-bold bg-gradient-to-r from-amber-500 to-amber-400 bg-clip-text text-transparent">
+                    <div className="pt-4 sm:pt-6 border-t border-amber-500/20 flex flex-col lex-row items-start items-center justify-between gap-4">
+                      <p className="text-xl sm:text-2xl md:text-3xl font-serif font-bold bg-gradient-to-r from-amber-500 to-amber-400 bg-clip-text text-transparent">
                         {service.price}
                       </p>
-                      <Button asChild size="sm" className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-bold border-2 border-black shadow-xl">
-                        <Link href="/booking">
+                      <Button
+                        asChild
+                        size="lg"
+                        className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-bold border-2 border-black shadow-xl"
+                      >
+                        <Link href="/contact">
                           <Zap className="w-4 h-4 mr-2" />
                           Book Now
                         </Link>
@@ -315,37 +264,26 @@ export default function ServicesPage() {
               </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* Studio Rental Services */}
       <section className="py-20 px-6 relative overflow-hidden border-y-2 border-amber-500">
         {/* Film strip decoration */}
         <div className="absolute top-0 left-0 right-0 h-12 bg-black flex items-center overflow-hidden border-b-2 border-amber-500">
-          <motion.div
-            className="flex"
-            animate={{ x: [0, -200] }}
-            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-          >
+          <motion.div className="flex" animate={{ x: [0, -200] }} transition={{ duration: 15, repeat: Infinity, ease: "linear" }}>
             {[...Array(50)].map((_, i) => (
               <div key={i} className="w-8 h-6 bg-gradient-to-b from-amber-500 to-amber-600 mx-3 rounded-sm shadow-lg shadow-amber-500/30" />
             ))}
           </motion.div>
         </div>
 
-        <div className="max-w-6xl mx-auto pt-16 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
+        <div className="max-w-6xl mx-auto py-16 relative z-10">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
             <h2 className="text-5xl md:text-6xl font-serif font-light text-white mb-4">
               Studio <span className="bg-gradient-to-r from-amber-500 to-amber-400 bg-clip-text text-transparent font-bold">Rentals</span>
             </h2>
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-              Access our fully equipped, professional studio for your creative projects.
-            </p>
+            <p className="text-lg text-gray-400 max-w-2xl mx-auto">Access our fully equipped, professional studio for your creative projects.</p>
           </motion.div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -369,7 +307,7 @@ export default function ServicesPage() {
                   </motion.div>
                   <div className="flex-1">
                     <h3 className="font-bold text-white mb-2 text-lg">{service.title}</h3>
-                    <p className="text-sm text-gray-400 mb-3">{service.description}</p>
+                    <p className="text-sm text-gray-400 mb-3 line-clamp-4">{service.description}</p>
                     <p className="text-amber-500 font-bold text-lg">{service.price}</p>
                   </div>
                 </div>
@@ -380,11 +318,7 @@ export default function ServicesPage() {
 
         {/* Film strip decoration - bottom */}
         <div className="absolute bottom-0 left-0 right-0 h-12 bg-black flex items-center overflow-hidden border-t-2 border-amber-500 mt-16">
-          <motion.div
-            className="flex"
-            animate={{ x: [-200, 0] }}
-            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-          >
+          <motion.div className="flex" animate={{ x: [-200, 0] }} transition={{ duration: 15, repeat: Infinity, ease: "linear" }}>
             {[...Array(50)].map((_, i) => (
               <div key={i} className="w-8 h-6 bg-gradient-to-b from-amber-500 to-amber-600 mx-3 rounded-sm shadow-lg shadow-amber-500/30" />
             ))}
@@ -405,14 +339,14 @@ export default function ServicesPage() {
                 <span className="text-sm font-black tracking-wider">STUDIO FACILITIES</span>
               </motion.div>
 
-              <h2 className="text-5xl md:text-6xl font-serif font-light text-white mb-6">
-                Fully Equipped<br />
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light text-white mb-6">
+                Fully Equipped
+                <br />
                 <span className="bg-gradient-to-r from-amber-500 to-amber-400 bg-clip-text text-transparent font-bold">Professional Space</span>
               </h2>
 
               <p className="text-lg text-gray-400 leading-relaxed mb-10">
-                Our studio features equipment and professional amenities designed for photographers, videographers, and
-                creative professionals.
+                Our studio features equipment and professional amenities designed for photographers, videographers, and creative professionals.
               </p>
 
               <div className="grid sm:grid-cols-2 gap-4">
@@ -490,6 +424,7 @@ export default function ServicesPage() {
                   src="/photo/professional-photography-studio-interior.jpg"
                   alt="Luminous Studio professional space"
                   fill
+                  sizes="w-full h-full"
                   className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
@@ -520,11 +455,7 @@ export default function ServicesPage() {
             transition={{ type: "spring", stiffness: 100 }}
             className="mb-8"
           >
-            <motion.div
-              animate={{ rotate: [0, 360] }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              className="inline-block"
-            >
+            <motion.div animate={{ rotate: [0, 360] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} className="inline-block">
               <Aperture className="w-24 h-24 text-amber-500" />
             </motion.div>
           </motion.div>
@@ -546,14 +477,13 @@ export default function ServicesPage() {
           >
             Contact us today to discuss your project and book your session.
           </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-          >
-            <Button asChild size="lg" className="bg-gradient-to-r from-amber-500 to-amber-600 text-black hover:from-amber-400 hover:to-amber-500 font-black px-10 py-6 text-lg shadow-2xl shadow-amber-500/40 border-2 border-black">
-              <Link href="/booking">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 }}>
+            <Button
+              asChild
+              size="lg"
+              className="bg-gradient-to-r from-amber-500 to-amber-600 text-black hover:from-amber-400 hover:to-amber-500 font-black px-10 py-6 text-lg shadow-2xl shadow-amber-500/40 border-2 border-black"
+            >
+              <Link href="/contact">
                 <Camera className="w-6 h-6 mr-3" />
                 Book a Consultation
               </Link>

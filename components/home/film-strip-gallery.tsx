@@ -1,4 +1,5 @@
 "use client"
+import { useIsMobile, useIsTablet } from "@/hooks/use-device"
 import { motion, useScroll, useTransform } from "framer-motion"
 import Image from "next/image"
 import { useRef } from "react"
@@ -28,9 +29,11 @@ interface FilmStripGalleryProps {
 
 export function FilmStripGallery({ direction = "left", speed = 25 }: FilmStripGalleryProps) {
   const containerRef = useRef(null)
+  const isMobile = useIsMobile()
+  const isTablet = useIsTablet()
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start end", "end start"]
+    offset: ["start end", "end start"],
   })
 
   // Transform scroll into scale - starts zoomed in, zooms out as you scroll
@@ -42,29 +45,21 @@ export function FilmStripGallery({ direction = "left", speed = 25 }: FilmStripGa
       <div className="relative w-full">
         {/* Film perforations top */}
         <div className="h-6 bg-black flex items-center justify-around border-y border-[#d4a574]/20 mb-4">
-          {[...Array(50)].map((_, i) => (
+          {[...Array(isMobile ? 10 : isTablet ? 30 : 50)].map((_, i) => (
             <div key={i} className="w-3 h-3 bg-[#d4a574]/20 rounded-sm" />
           ))}
         </div>
 
         {/* Image Grid with Zoom Effect */}
-        <motion.div 
-          className="grid grid-cols-5 gap-1 px-8 max-w-[1800px] mx-auto"
+        <motion.div
+          className="grid grid-cols-3 lg:grid-cols-5 gap-1 px-8 max-w-[1800px] mx-auto"
           style={{ scale, opacity: imageOpacity }}
         >
           {galleryImages.map((image, index) => (
-            <div 
-              key={index} 
-              className="relative aspect-square overflow-hidden rounded-sm border border-[#d4a574]/30"
-            >
-              <Image 
-                src={image.src || "/placeholder.svg"} 
-                alt={image.alt} 
-                fill 
-                className="object-cover" 
-              />
+            <div key={index} className="relative aspect-square overflow-hidden rounded-sm border border-[#d4a574]/30">
+              <Image src={image.src || "/placeholder.svg"} alt={image.alt} fill sizes="w-full h-full" className="object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-40" />
-              
+
               {/* Viewfinder corners */}
               <div className="absolute inset-2 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
                 <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-[#d4a574]"></div>
@@ -78,13 +73,13 @@ export function FilmStripGallery({ direction = "left", speed = 25 }: FilmStripGa
 
         {/* Film perforations bottom */}
         <div className="h-6 bg-black flex items-center justify-around border-y border-[#d4a574]/20 mt-4">
-          {[...Array(50)].map((_, i) => (
+          {[...Array(isMobile ? 10 : isTablet ? 30 : 50)].map((_, i) => (
             <div key={i} className="w-3 h-3 bg-[#d4a574]/20 rounded-sm" />
           ))}
         </div>
 
         {/* Center Plus Icon Overlay */}
-        <motion.div 
+        <motion.div
           className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
           style={{ opacity: useTransform(scrollYProgress, [0, 0.3], [1, 0]) }}
         >

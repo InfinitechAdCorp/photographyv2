@@ -5,6 +5,9 @@ import Link from "next/link"
 import Image from "next/image"
 import { ChevronRight, Sparkles, Award, Camera } from "lucide-react"
 import { useRef } from "react"
+import { CountingNumber } from "../ui/shadcn-io/counting-number"
+import { useIsMobile, useIsTablet } from "@/hooks/use-device"
+import FloatingParticles from "../animated-golden-particles"
 
 const stats = [
   { value: 500, suffix: "+", label: "Projects Completed" },
@@ -46,11 +49,16 @@ const features = [
 ]
 
 // Shutter Text Component
-function ShutterText({ text, className = "", delay = 0, style = {} }: { 
-  text: string; 
-  className?: string; 
-  delay?: number;
-  style?: React.CSSProperties;
+function ShutterText({
+  text,
+  className = "",
+  delay = 0,
+  style = {},
+}: {
+  text: string
+  className?: string
+  delay?: number
+  style?: React.CSSProperties
 }) {
   return (
     <motion.span
@@ -67,10 +75,7 @@ function ShutterText({ text, className = "", delay = 0, style = {} }: {
 }
 
 // Aperture Reveal Component
-function ApertureReveal({ children, delay = 0 }: { 
-  children: React.ReactNode; 
-  delay?: number;
-}) {
+function ApertureReveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   return (
     <motion.div
       initial={{ clipPath: "circle(0% at 50% 50%)" }}
@@ -86,7 +91,7 @@ function ApertureReveal({ children, delay = 0 }: {
 export default function AboutSection() {
   const sectionRef = useRef(null)
   const imageRef = useRef(null)
-  
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
@@ -101,72 +106,48 @@ export default function AboutSection() {
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
-    restDelta: 0.001
+    restDelta: 0.001,
   })
 
   const backgroundY = useTransform(smoothProgress, [0, 1], ["0%", "30%"])
   const imageY = useTransform(imageScrollProgress, [0, 1], ["-20%", "20%"])
   const imageScale = useTransform(imageScrollProgress, [0, 0.5, 1], [1.3, 1, 1.3])
   const imageRotate = useTransform(imageScrollProgress, [0, 1], [-3, 3])
+  const isMobile = useIsMobile()
+  const isTablet = useIsTablet()
 
   return (
     <section ref={sectionRef} className="py-20 relative overflow-hidden" style={{ backgroundColor: "#2b1d12" }}>
       {/* Animated gradient background with parallax - matching your reference */}
-      <motion.div 
+      <motion.div
         className="absolute inset-0"
-        style={{ 
+        style={{
           y: backgroundY,
-          background: "linear-gradient(135deg, #2b1d12 0%, #3d2817 30%, #4a2f1a 60%, #2b1d12 100%)"
+          background: "linear-gradient(135deg, #2b1d12 0%, #3d2817 30%, #4a2f1a 60%, #2b1d12 100%)",
         }}
       />
-      
+
       {/* Radial gradient overlay for depth */}
-      <div className="absolute inset-0" style={{
-        background: "radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,0.3) 100%)"
-      }} />
+      <div
+        className="absolute inset-0"
+        style={{
+          background: "radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,0.3) 100%)",
+        }}
+      />
 
       {/* Animated orange particles with parallax depth */}
-      {[...Array(50)].map((_, i) => {
-        const depth = Math.random()
-        const size = 1 + depth * 3
-        
-        return (
-          <motion.div
-            key={i}
-            className="absolute rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              width: `${size}px`,
-              height: `${size}px`,
-              backgroundColor: depth > 0.7 ? "#ff9500" : depth > 0.4 ? "#ff8c00" : "#cc7000",
-              boxShadow: `0 0 ${size * 3}px ${depth > 0.5 ? "#ff9500" : "#cc7000"}`,
-            }}
-            animate={{
-              y: [0, -30 - depth * 50, 0],
-              opacity: [0, 0.6 + depth * 0.4, 0],
-              scale: [0, 1 + depth * 0.5, 0],
-            }}
-            transition={{
-              duration: 3 + Math.random() * 4,
-              repeat: Infinity,
-              delay: Math.random() * 5,
-              ease: "easeInOut"
-            }}
-          />
-        )
-      })}
+      <FloatingParticles count={50} />
 
       {/* Film perforations - bright orange */}
       <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-black/95 to-transparent z-20">
         <div className="h-full flex flex-col justify-around items-center py-8">
-          {[...Array(20)].map((_, i) => (
+          {[...Array(isMobile ? 40 : 20)].map((_, i) => (
             <motion.div
               key={i}
               className="w-8 h-5 rounded-sm"
-              style={{ 
+              style={{
                 background: "linear-gradient(to bottom, #ff9500, #ff8c00)",
-                boxShadow: "0 0 15px rgba(255, 149, 0, 0.6), inset 0 1px 2px rgba(255,255,255,0.3)"
+                boxShadow: "0 0 15px rgba(255, 149, 0, 0.6), inset 0 1px 2px rgba(255,255,255,0.3)",
               }}
               initial={{ opacity: 0, scale: 0, x: -20 }}
               animate={{ opacity: 1, scale: 1, x: 0 }}
@@ -178,13 +159,13 @@ export default function AboutSection() {
       </div>
       <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-black/95 to-transparent z-20">
         <div className="h-full flex flex-col justify-around items-center py-8">
-          {[...Array(20)].map((_, i) => (
+          {[...Array(isMobile ? 40 : 20)].map((_, i) => (
             <motion.div
               key={i}
               className="w-8 h-5 rounded-sm"
-              style={{ 
+              style={{
                 background: "linear-gradient(to bottom, #ff9500, #ff8c00)",
-                boxShadow: "0 0 15px rgba(255, 149, 0, 0.6), inset 0 1px 2px rgba(255,255,255,0.3)"
+                boxShadow: "0 0 15px rgba(255, 149, 0, 0.6), inset 0 1px 2px rgba(255,255,255,0.3)",
               }}
               initial={{ opacity: 0, scale: 0, x: 20 }}
               animate={{ opacity: 1, scale: 1, x: 0 }}
@@ -195,7 +176,7 @@ export default function AboutSection() {
         </div>
       </div>
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-18 lg:px-6 relative z-10">
         {/* Header with sparkle effect */}
         <div className="text-center mb-16">
           <motion.div
@@ -205,38 +186,32 @@ export default function AboutSection() {
             transition={{ duration: 0.6 }}
             className="flex items-center justify-center gap-4 mb-6"
           >
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            >
+            <motion.div animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }}>
               <Sparkles className="w-6 h-6" style={{ color: "#ff9500" }} />
             </motion.div>
             <p className="font-black tracking-[0.3em] text-sm" style={{ color: "#ff9500" }}>
               ABOUT US
             </p>
-            <motion.div
-              animate={{ rotate: -360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            >
+            <motion.div animate={{ rotate: -360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }}>
               <Sparkles className="w-6 h-6" style={{ color: "#ff9500" }} />
             </motion.div>
           </motion.div>
-          
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif font-light leading-tight">
-            <ShutterText text="Crafting visual" className="text-white" delay={0.2} />
+
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light leading-tight">
+            <ShutterText text="Crafting Visual" className="text-white" delay={0.2} />
             <br />
-            <ShutterText 
-              text="stories since 2015"
+            <ShutterText
+              text="Stories Since 2015"
               delay={0.4}
-              style={{ 
+              style={{
                 background: "linear-gradient(to right, #ff9500, #ff8c00, #ff9500)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
-                backgroundClip: "text"
+                backgroundClip: "text",
               }}
             />
           </h2>
-          
+
           {/* Decorative line with animation */}
           <motion.div
             initial={{ scaleX: 0 }}
@@ -244,8 +219,8 @@ export default function AboutSection() {
             viewport={{ once: true }}
             transition={{ duration: 1.5, delay: 0.8 }}
             className="h-1 w-32 mx-auto mt-8"
-            style={{ 
-              background: "linear-gradient(to right, transparent, #ff9500, transparent)"
+            style={{
+              background: "linear-gradient(to right, transparent, #ff9500, transparent)",
             }}
           />
         </div>
@@ -262,33 +237,34 @@ export default function AboutSection() {
           >
             <ApertureReveal delay={0.3}>
               <div className="relative">
-                <motion.div 
+                <motion.div
                   className="relative aspect-[4/5] overflow-hidden border-4 shadow-2xl"
-                  style={{ 
+                  style={{
                     borderColor: "rgba(255, 149, 0, 0.5)",
                     boxShadow: "0 25px 70px rgba(255, 149, 0, 0.4)",
                     y: imageY,
                     scale: imageScale,
-                    rotate: imageRotate
+                    rotate: imageRotate,
                   }}
-                  whileHover={{ 
+                  whileHover={{
                     scale: 1.05,
                     rotate: 0,
-                    transition: { duration: 0.5, type: "spring", stiffness: 100 }
+                    transition: { duration: 0.5, type: "spring", stiffness: 100 },
                   }}
                 >
                   <Image
                     src="/photo/photographer-working-in-professional-studio-with-c.jpg"
                     alt="Luminous Studio photographer"
                     fill
+                    sizes="w-full h-full"
                     className="object-cover"
                   />
-                  
+
                   {/* Gradient overlay */}
-                  <div 
+                  <div
                     className="absolute inset-0 mix-blend-multiply"
                     style={{
-                      background: "linear-gradient(to top, rgba(43, 29, 18, 0.9), transparent, rgba(43, 29, 18, 0.4))"
+                      background: "linear-gradient(to top, rgba(43, 29, 18, 0.9), transparent, rgba(43, 29, 18, 0.4))",
                     }}
                   />
 
@@ -305,19 +281,19 @@ export default function AboutSection() {
                       <motion.div
                         className="w-24 h-24 border-2 rounded-full"
                         style={{ borderColor: "#ff9500" }}
-                        animate={{ 
+                        animate={{
                           scale: [1, 1.3, 1],
-                          opacity: [0.4, 1, 0.4]
+                          opacity: [0.4, 1, 0.4],
                         }}
                         transition={{ duration: 2.5, repeat: Infinity }}
                       >
                         <div className="absolute top-1/2 left-0 w-full h-px" style={{ backgroundColor: "rgba(255, 149, 0, 0.6)" }} />
                         <div className="absolute top-0 left-1/2 w-px h-full" style={{ backgroundColor: "rgba(255, 149, 0, 0.6)" }} />
-                        <motion.div 
-                          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full" 
-                          style={{ 
+                        <motion.div
+                          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full"
+                          style={{
                             backgroundColor: "#ff9500",
-                            boxShadow: "0 0 20px rgba(255, 149, 0, 1)"
+                            boxShadow: "0 0 20px rgba(255, 149, 0, 1)",
                           }}
                           animate={{ scale: [1, 1.5, 1] }}
                           transition={{ duration: 1.5, repeat: Infinity }}
@@ -340,7 +316,7 @@ export default function AboutSection() {
                       { top: 0, left: 0, x: -10, y: -10, borderLeft: "3px solid #ff9500", borderTop: "3px solid #ff9500" },
                       { top: 0, right: 0, x: 10, y: -10, borderRight: "3px solid #ff9500", borderTop: "3px solid #ff9500" },
                       { bottom: 0, left: 0, x: -10, y: 10, borderLeft: "3px solid #ff9500", borderBottom: "3px solid #ff9500" },
-                      { bottom: 0, right: 0, x: 10, y: 10, borderRight: "3px solid #ff9500", borderBottom: "3px solid #ff9500" }
+                      { bottom: 0, right: 0, x: 10, y: 10, borderRight: "3px solid #ff9500", borderBottom: "3px solid #ff9500" },
                     ].map((style, i) => (
                       <motion.div
                         key={i}
@@ -361,29 +337,29 @@ export default function AboutSection() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.8 }}
-                  className="absolute -right-6 top-1/4 text-black p-6 font-mono text-sm font-bold space-y-2 shadow-xl border-2 border-black"
-                  style={{ 
+                  className="absolute top-1/4 -right-2 sm:-right-6 sm:top-1/3 md:-right-10 md:top-1/4 lg:-right-16 lg:top-1/4text-black p-3 sm:p-4 md:p-6 font-mono text-xs sm:text-sm md:text-base font-bold space-y-2 shadow-xl border-2 border-black rounded-lg"
+                  style={{
                     background: "linear-gradient(135deg, #ff9500, #ff8c00)",
-                    boxShadow: "0 10px 40px rgba(255, 149, 0, 0.5)"
+                    boxShadow: "0 10px 40px rgba(255, 149, 0, 0.5)",
                   }}
-                  whileHover={{ 
+                  whileHover={{
                     scale: 1.15,
                     rotate: [0, -5, 5, 0],
-                    transition: { duration: 0.6 }
+                    transition: { duration: 0.6 },
                   }}
                 >
                   <div className="flex items-center gap-2">
                     <Camera className="w-4 h-4" />
-                    <span>PRO</span>
+                    <span>PRO</span>{" "}
+                    <motion.div
+                      className="w-2 h-2 bg-black rounded-full"
+                      animate={{ scale: [1, 1.4, 1], opacity: [1, 0.6, 1] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    />
                   </div>
                   <div className="text-black/90">f/1.4</div>
                   <div className="text-black/90">1/250s</div>
                   <div className="text-black/90">ISO 100</div>
-                  <motion.div
-                    className="w-2 h-2 bg-black rounded-full"
-                    animate={{ scale: [1, 1.4, 1], opacity: [1, 0.6, 1] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  />
                 </motion.div>
 
                 {/* Award badge */}
@@ -392,15 +368,15 @@ export default function AboutSection() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 1, type: "spring", stiffness: 150 }}
-                  className="absolute -left-6 bottom-1/4 w-20 h-20 rounded-full flex items-center justify-center shadow-2xl border-4 border-black"
-                  style={{ 
+                  className=" absolute -left-6 bottom-0.5 lg:bottom-1/4 w-15 h-15 lg:w-20 lg:h-20 rounded-full flex items-center justify-center shadow-2xl border-4 border-black"
+                  style={{
                     background: "linear-gradient(135deg, #ff9500, #ff8c00)",
-                    boxShadow: "0 10px 40px rgba(255, 149, 0, 0.6)"
+                    boxShadow: "0 10px 40px rgba(255, 149, 0, 0.6)",
                   }}
-                  whileHover={{ 
-                    scale: 1.25, 
+                  whileHover={{
+                    scale: 1.25,
                     rotate: 360,
-                    transition: { duration: 0.7, type: "spring", stiffness: 100 }
+                    transition: { duration: 0.7, type: "spring", stiffness: 100 },
                   }}
                 >
                   <Award className="w-10 h-10 text-black" />
@@ -418,9 +394,8 @@ export default function AboutSection() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-gray-300 text-xl leading-relaxed"
             >
-              Luminous Studio is dedicated to capturing life's precious moments with artistry and precision. Our
-              team of experienced photographers brings a unique blend of technical expertise and creative vision to
-              every project.
+              Luminous Studio is dedicated to capturing life's precious moments with artistry and precision. Our team of experienced photographers
+              brings a unique blend of technical expertise and creative vision to every project.
             </motion.p>
 
             <motion.p
@@ -430,8 +405,8 @@ export default function AboutSection() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="text-gray-400 text-lg leading-relaxed"
             >
-              From intimate portraits to grand celebrations, we approach each session with the same dedication to
-              excellence and attention to detail that has made us a trusted name in photography.
+              From intimate portraits to grand celebrations, we approach each session with the same dedication to excellence and attention to detail
+              that has made us a trusted name in photography.
             </motion.p>
 
             {/* Features */}
@@ -446,20 +421,20 @@ export default function AboutSection() {
                   className="flex items-start gap-4 group cursor-pointer"
                   whileHover={{ x: 12 }}
                 >
-                  <motion.div 
+                  <motion.div
                     className="w-14 h-14 border-2 flex items-center justify-center shadow-lg flex-shrink-0"
-                    style={{ 
+                    style={{
                       background: "rgba(255, 149, 0, 0.1)",
                       borderColor: "rgba(255, 149, 0, 0.4)",
                       boxShadow: "0 4px 20px rgba(255, 149, 0, 0.2)",
-                      color: "#ff9500"
+                      color: "#ff9500",
                     }}
-                    whileHover={{ 
+                    whileHover={{
                       rotate: 360,
                       background: "linear-gradient(135deg, #ff9500, #ff8c00)",
                       color: "#000",
                       borderColor: "#ff9500",
-                      transition: { duration: 0.6, type: "spring", stiffness: 100 }
+                      transition: { duration: 0.6, type: "spring", stiffness: 100 },
                     }}
                   >
                     {feature.icon}
@@ -480,13 +455,13 @@ export default function AboutSection() {
               className="pt-6"
             >
               <Link href="/about">
-                <Button 
-                  variant="outline" 
-                  size="lg" 
+                <Button
+                  variant="outline"
+                  size="lg"
                   className="group bg-transparent border-2 font-bold transition-all duration-300"
-                  style={{ 
+                  style={{
                     borderColor: "#ff9500",
-                    color: "#ff9500"
+                    color: "#ff9500",
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.background = "linear-gradient(135deg, #ff9500, #ff8c00)"
@@ -499,7 +474,7 @@ export default function AboutSection() {
                     e.currentTarget.style.borderColor = "#ff9500"
                   }}
                 >
-                  Learn More About Us
+                  Learn More
                   <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-2" />
                 </Button>
               </Link>
@@ -517,14 +492,14 @@ export default function AboutSection() {
         >
           {/* Film strip top border */}
           <div className="h-12 bg-black flex items-center justify-around mb-2 border-y-2" style={{ borderColor: "#ff9500" }}>
-            {[...Array(24)].map((_, i) => (
+            {[...Array(isMobile ? 4 : isTablet ? 12 : 24)].map((_, i) => (
               <motion.div
                 key={i}
                 className="w-5 h-6 rounded-sm shadow-lg border"
-                style={{ 
+                style={{
                   background: "linear-gradient(to bottom, #ff9500, #ff8c00)",
                   boxShadow: "0 0 15px rgba(255, 149, 0, 0.6)",
-                  borderColor: "#ffaa33"
+                  borderColor: "#ffaa33",
                 }}
                 initial={{ scaleY: 0 }}
                 whileInView={{ scaleY: 1 }}
@@ -535,39 +510,47 @@ export default function AboutSection() {
             ))}
           </div>
 
-          <div className="grid md:grid-cols-3 gap-12 py-20 bg-black px-12 backdrop-blur-sm border-x-2" style={{ borderColor: "#ff9500" }}>
+          <div
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 md:gap-12 py-10 sm:py-16 md:py-20 bg-black px-4 sm:px-8 md:px-12 backdrop-blur-sm border-x-2"
+            style={{ borderColor: "#ff9500" }}
+          >
             {stats.map((stat, index) => (
               <motion.div
                 key={stat.label}
                 initial={{ opacity: 0, scale: 0.3 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ 
+                transition={{
                   delay: 0.2 + index * 0.2,
                   type: "spring",
                   stiffness: 120,
-                  damping: 10
+                  damping: 10,
                 }}
                 className="text-center"
-                whileHover={{ y: -15, scale: 1.08 }}
+                whileHover={{ y: -10, scale: 1.05 }}
               >
                 <motion.div
-                  className="text-7xl md:text-8xl lg:text-9xl font-serif font-bold mb-4"
-                  style={{ 
+                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold mb-4"
+                  style={{
                     background: "linear-gradient(to right, #ff9500, #ff8c00, #ff9500)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",
-                    filter: "drop-shadow(0 0 30px rgba(255, 149, 0, 0.5))"
+                    filter: "drop-shadow(0 0 30px rgba(255, 149, 0, 0.5))",
                   }}
                   initial={{ scale: 0, rotate: -180 }}
                   whileInView={{ scale: 1, rotate: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: 0.4 + index * 0.2, type: "spring", stiffness: 150 }}
+                  transition={{
+                    delay: 0.4 + index * 0.2,
+                    type: "spring",
+                    stiffness: 150,
+                  }}
                 >
-                  {stat.value}{stat.suffix}
+                  <CountingNumber number={stat.value} />
+                  {stat.suffix}
                 </motion.div>
-                <p className="text-base md:text-lg uppercase tracking-widest font-bold" style={{ color: "#ff9500" }}>
+                <p className="text-sm sm:text-base md:text-lg uppercase tracking-widest font-bold" style={{ color: "#ff9500" }}>
                   {stat.label}
                 </p>
               </motion.div>
@@ -576,14 +559,14 @@ export default function AboutSection() {
 
           {/* Film strip bottom border */}
           <div className="h-12 bg-black flex items-center justify-around mt-2 border-y-2" style={{ borderColor: "#ff9500" }}>
-            {[...Array(24)].map((_, i) => (
+            {[...Array(isMobile ? 4 : isTablet ? 12 : 24)].map((_, i) => (
               <motion.div
                 key={i}
                 className="w-5 h-6 rounded-sm shadow-lg border"
-                style={{ 
+                style={{
                   background: "linear-gradient(to bottom, #ff9500, #ff8c00)",
                   boxShadow: "0 0 15px rgba(255, 149, 0, 0.6)",
-                  borderColor: "#ffaa33"
+                  borderColor: "#ffaa33",
                 }}
                 initial={{ scaleY: 0 }}
                 whileInView={{ scaleY: 1 }}
