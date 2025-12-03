@@ -475,7 +475,7 @@ export default function Blog() {
                 <Image src={post.image || "/placeholder.svg"} alt={post.title} fill sizes="w-full h-full" className="object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f0a]/60 to-transparent" />
               </div>
-              <span className="block mb-4 text-xl font-medium text-gold/90 italic border-l-4 border-gold pl-6 py-2">{post.excerpt}</span>
+              <span className="block mb-4 text-xl font-medium text-gold/90 italic border-l-4 border-gold pl-3 py-1">{post.excerpt}</span>
               <p className="text-gray-300 leading-relaxed">{post.content}</p>
             </>
           )}

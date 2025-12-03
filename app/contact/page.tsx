@@ -370,6 +370,16 @@ export default function BookingPage() {
     setPrevStep(step)
   }, [step])
 
+  // Lens focus effect
+  const focusRing = {
+    initial: { scale: 0.8, opacity: 0 },
+    animate: {
+      scale: [0.9, 1.1, 1],
+      opacity: [0, 1, 0],
+      transition: { duration: 2, repeat: Infinity, repeatDelay: 3 },
+    },
+  }
+
   return (
     <div className="relative min-h-screen bg-black overflow-hidden">
       <FloatingParticles />
@@ -543,6 +553,13 @@ export default function BookingPage() {
               animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.6 }}
             >
+              {/* Focus Ring Animation */}
+              <motion.div
+                className="absolute inset-0 border-4 border-[#d4a574]/50 rounded-lg pointer-events-none"
+                variants={focusRing}
+                initial="initial"
+                animate="animate"
+              />
               <form onSubmit={(e) => e.preventDefault()} className="space-y-8">
                 {/* Step 1: Contact Information */}
                 {step === 1 && (
@@ -886,12 +903,17 @@ export default function BookingPage() {
                     )}
 
                     {formData.date && formData.time && (
-                      <div className="bg-gold/10 border border-gold rounded-lg p-4 animate-fadeIn">
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
+                        className="bg-gold/10 border border-gold rounded-lg p-4 animate-fadeIn"
+                      >
                         <p className="text-sm text-gray-300 mb-1">Selected Session</p>
                         <p className="font-semibold text-gray-300">
                           {formatFullDate(formData.date)} at {formatDisplayTime(formData.time)}
                         </p>
-                      </div>
+                      </motion.div>
                     )}
 
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }}>
@@ -903,6 +925,8 @@ export default function BookingPage() {
                         onChange={handleChange}
                         className="w-full px-4 py-3 border border-amber-500/20 rounded-lg bg-card text-white focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent transition resize-none h-32"
                         placeholder="Tell us more about your vision..."
+                        initial="hidden"
+                        animate="visible"
                         whileFocus={{ scale: 1.02, boxShadow: "0 0 12px rgba(245, 158, 11, 0.4)" }}
                         transition={{ duration: 0.2 }}
                       />
@@ -1026,7 +1050,7 @@ export default function BookingPage() {
           <PhotographySuccessAnimation isVisible={submitted} />
         </motion.section>
 
-        <section className="z-50 relative">
+        <section className="z-20 relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

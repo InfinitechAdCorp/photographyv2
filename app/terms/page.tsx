@@ -1,4 +1,4 @@
-'use client'
+"use client"
 import FloatingParticles from "@/components/animated-golden-particles"
 import { motion } from "motion/react"
 
@@ -22,13 +22,18 @@ const Terms = () => {
       <FloatingParticles />
       <section className="min-h-screen pt-24 pb-16 bg-gradient-to-br from-black via-black to-slate-900 overflow-hidden">
         <div className="container mx-auto px-4 max-w-4xl">
-          <motion.h1 initial="hidden" animate="visible" variants={fadeInUp} className="text-4xl md:text-5xl font-bold text-foreground mb-8">
+          <motion.h1
+            initial="hidden"
+            animate="visible"
+            variants={fadeInUp}
+            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-amber-500 to-amber-400 bg-clip-text text-transparent mb-8"
+          >
             Terms of Service
           </motion.h1>
 
           <motion.div
             initial="hidden"
-            whileInView="visible"
+            animate="visible"
             viewport={{ once: true, amount: 0.2 }}
             variants={staggerContainer}
             className="space-y-8 text-gray-300"

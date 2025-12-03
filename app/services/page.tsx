@@ -97,6 +97,18 @@ const studioRentalServices = [
 ]
 
 export default function ServicesPage() {
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0 },
+  }
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+    },
+  }
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
       {/* Animated gold particles background */}
@@ -125,9 +137,8 @@ export default function ServicesPage() {
           <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }}>
             <motion.div
               className="inline-flex items-center gap-3 bg-gradient-to-r from-amber-500 to-amber-600 text-black px-6 py-3 rounded-full mb-8 border-2 border-black shadow-xl shadow-amber-500/30"
-              whileHover={{ scale: 1.05 }}
-              animate={{ y: [0, -5, 0] }}
-              transition={{ duration: 3, repeat: Infinity }}
+              variants={fadeInUp}
+              transition={{ duration: 0.5 }}
             >
               <motion.div animate={{ rotate: [0, 360] }} transition={{ duration: 3, repeat: Infinity, ease: "linear" }}>
                 <Aperture className="w-5 h-5" />
@@ -158,20 +169,10 @@ export default function ServicesPage() {
 
       {/* Photography Services - Enhanced Cards */}
       <section className="py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 md:px-8 relative z-10">
-        <div className="max-w-7xl mx-auto">
+        <motion.div className="max-w-7xl mx-auto" initial="hidden" animate="visible" variants={staggerContainer}>
           {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-10 sm:mb-14 md:mb-20"
-          >
-            <motion.div
-              className="flex flex-row items-center justify-center gap-3 mb-6"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-            >
+          <motion.div variants={fadeInUp} transition={{ duration: 0.5 }} className="text-center mb-10 sm:mb-14 md:mb-20">
+            <div className="flex flex-row items-center justify-center gap-3 mb-6">
               <motion.div animate={{ rotate: [0, 360] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }}>
                 <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500" />
               </motion.div>
@@ -181,7 +182,7 @@ export default function ServicesPage() {
               <motion.div animate={{ rotate: [360, 0] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }}>
                 <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500" />
               </motion.div>
-            </motion.div>
+            </div>
             <p className="text-sm sm:text-base md:text-lg text-gray-400 max-w-md sm:max-w-xl md:max-w-2xl mx-auto px-2">
               Professional photography tailored to your needs. All packages include edited images and full licensing rights.
             </p>
@@ -193,7 +194,7 @@ export default function ServicesPage() {
               <motion.div
                 key={service.title}
                 initial={{ opacity: 0, y: 60, rotateX: 20 }}
-                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                animate={{ opacity: 1, y: 0, rotateX: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
                 whileHover={{ y: -8, transition: { duration: 0.3 } }}
@@ -263,7 +264,7 @@ export default function ServicesPage() {
               </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* Studio Rental Services */}

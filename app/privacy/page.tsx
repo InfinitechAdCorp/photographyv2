@@ -1,4 +1,4 @@
-'use client'
+"use client"
 import FloatingParticles from "@/components/animated-golden-particles"
 import { motion } from "motion/react"
 
@@ -32,7 +32,7 @@ const Privacy = () => {
 
           <motion.div
             initial="hidden"
-            whileInView="visible"
+            animate="visible"
             viewport={{ once: true, amount: 0.2 }}
             variants={staggerContainer}
             className="space-y-8 text-gray-300"
